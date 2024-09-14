@@ -4,10 +4,8 @@ const Nav = () => {
 
    const navOptions = <>
       <NavLink to='/'>Home</NavLink>
-      <NavLink to='/contact'>Contact</NavLink>
-      <NavLink to='/dashboard'>Dashboard</NavLink>
       <NavLink to='/menu'>Our Menu</NavLink>
-      <NavLink to='/ourShop'>Our Shop</NavLink>
+      <NavLink to='/order'>Order Food</NavLink>
    </>
    return (
       <div className="navbar bg-base-100">

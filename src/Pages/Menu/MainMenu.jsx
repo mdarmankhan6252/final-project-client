@@ -6,10 +6,10 @@ import img_3 from '../../assets/menu/salad-bg.jpg'
 import img_4 from '../../assets/menu/soup-bg.jpg'
 import img_5 from '../../assets/menu/dessert-bg.jpeg'
 
-import PopularMenu from "../Home/PopularMenu";
 import SharedTitle from "../../components/SharedTitle";
 import useMenu from "../../Hooks/useMenu";
 import MenuCategory from "./MenuCategory";
+import { Link } from "react-router-dom";
 
 const MainMenu = () => {
 
@@ -41,7 +41,7 @@ const MainMenu = () => {
             <MenuCategory items={offered}/>
 
             <div className="my-6 text-center">
-               <button className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</button>
+               <Link to='/order' className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</Link>
             </div>
          </div>
 
@@ -52,7 +52,7 @@ const MainMenu = () => {
             <MenuCategory items={desserts}/>
 
             <div className="my-6 text-center">
-               <button className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</button>
+               <Link to='/order' className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</Link>
             </div>
          </div>
 
@@ -63,7 +63,7 @@ const MainMenu = () => {
             <MenuCategory items={pizza}/>
 
             <div className="my-6 text-center">
-               <button className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</button>
+               <Link to='/order' className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</Link>
             </div>
          </div>
 
@@ -74,7 +74,7 @@ const MainMenu = () => {
             <MenuCategory items={salad}/>
 
             <div className="my-6 text-center">
-               <button className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</button>
+               <Link to='/order' className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</Link>
             </div>
          </div>
 
@@ -85,7 +85,7 @@ const MainMenu = () => {
             <MenuCategory items={soup}/>
 
             <div className="my-6 text-center">
-               <button className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</button>
+               <Link to='/order' className="border-b-4 rounded-xl border-black py-2 px-4 hover:bg-black hover:text-white font-semibold duration-200">order your favorite food</Link>
             </div>
          </div>
          
