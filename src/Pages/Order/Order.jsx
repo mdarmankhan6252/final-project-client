@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import './Order.css'
 import useMenu from '../../Hooks/useMenu';
 import FoodCard from './FoodCard';
+import { Helmet } from 'react-helmet-async';
 
 const Order = () => {
 
@@ -18,6 +19,10 @@ const Order = () => {
    return (
       <div>
          <SharedCover img_1={order_cover} title="Order Food" />
+
+         <Helmet>
+            <title>Bistro Boss | Order</title>
+         </Helmet>
 
          <Tabs className="my-20">
             <TabList className="text-center mb-8 flex items-center justify-center space-x-6 *:font-semibold *:cursor-pointer">

@@ -1,11 +1,20 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
+import { IoCartOutline } from "react-icons/io5";
 
 const Nav = () => {
+   const { user, logOut } = useContext(AuthContext)
 
    const navOptions = <>
       <NavLink to='/'>Home</NavLink>
       <NavLink to='/menu'>Our Menu</NavLink>
       <NavLink to='/order'>Order Food</NavLink>
+      <NavLink to='/login'>Login</NavLink>
+      <button className="flex items-center space-x-1 relative">
+         <IoCartOutline className="text-2xl"/>
+         <span className="absolute -right-5 -top-3 bg-pink-600 px-2 text-white font-semibold rounded-md">0</span>
+      </button>
    </>
    return (
       <div className="navbar bg-base-100">
@@ -47,7 +56,11 @@ const Nav = () => {
             </ul>
          </div>
          <div className="navbar-end">
-            <a className="btn">Button</a>
+            {user && <div className="mr-5 space-x-3">
+               <Link to='/profile' className=" font-semibold hover:underline">{user?.displayName}</Link>
+               <button onClick={() => logOut()} className="btn-sm bg-red-500 font-semibold text-white rounded-sm active:scale-[98%] duration-150">LogOut</button>
+            </div>}
+            {!user && <a className="btn">Button</a>}
          </div>
       </div>
    );
