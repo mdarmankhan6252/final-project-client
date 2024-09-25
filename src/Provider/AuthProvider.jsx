@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 
 export const AuthContext = createContext(null)
 const auth = getAuth(app)
@@ -9,10 +9,15 @@ const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const googleProvider = new GoogleAuthProvider()
 
     const createUser = (email, password) =>{
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
+    }
+    const googleRegister = () =>{
+        setLoading(true)
+        return signInWithPopup(auth, googleProvider)
     }
     const loginUser = (email, password) =>{
         setLoading(true)
@@ -30,9 +35,14 @@ const AuthProvider = ({children}) => {
 
     useEffect(()=>{
        const unsubscribe = onAuthStateChanged(auth, currentUser =>{
-            setUser(currentUser)
+            setUser(currentUser)      
             setLoading(false)
             console.log('current user -->', currentUser);
+            if(currentUser){
+                //get token and store client
+            }else{
+                //todo : remove token
+            }
         })
         return () =>{
             return unsubscribe()
@@ -47,6 +57,7 @@ const AuthProvider = ({children}) => {
         createUser,
         loginUser,
         logOut,
+        googleRegister,
         UpdateUserProfile
     }
     

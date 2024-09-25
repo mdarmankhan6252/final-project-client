@@ -7,14 +7,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Provider/AuthProvider';
 import toast from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import useAxiosPublic from '../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 
 const Register = () => {
 
     const navigate = useNavigate()
+    const axiosPublic = useAxiosPublic()
 
     const { createUser, UpdateUserProfile, user,
-        setUser, } = useContext(AuthContext)
+        setUser, logOut } = useContext(AuthContext)
 
     const handleLogin = e => {
         e.preventDefault()
@@ -28,13 +31,40 @@ const Register = () => {
                 console.log(result.user)
                 UpdateUserProfile(name)
                 setUser({ ...user, displayName: name })
-                toast.success("You created an account successfully.")
-                navigate('/')
-                form.reset()
+                const userInfo = {
+                    name,
+                    email
+                }
+                fetch('http://localhost:5000/users', {
+                    method:'POST',
+                    headers:{
+                        'content-type' : 'application/json'
+                    },
+                    body: JSON.stringify(userInfo)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.insertedId){
+                        Swal.fire({
+                            position:'center',
+                            icon:'success',
+                            title:'Welcome',
+                            timer:1500
+                        })
+                        logOut()
+                        navigate('/login')
+                        
+
+                    }
+                })
             })
             .catch(error => {
                 console.log(error);
             })
+    }
+
+    if(user){
+        return 
     }
 
     return (

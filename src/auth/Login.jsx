@@ -7,15 +7,17 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Provider/AuthProvider';
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
+import useAuth from '../Hooks/useAuth';
 
 
 const Login = () => {
     const navigate = useNavigate()
     const location = useLocation()
+    const { googleRegister } = useAuth()
 
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser, user } = useContext(AuthContext)
 
-    const from = location.state?.form?.pathname || '/'
+    const from = location.state?.from?.pathname || '/'
 
     const handleLogin = e => {
         e.preventDefault()
@@ -32,6 +34,39 @@ const Login = () => {
             .catch(error => {
                 console.log(error);
             })
+    }
+    const handleGoogle = () =>{
+        googleRegister()
+        .then(result =>{
+            console.log(result.user);
+            const userInfo = {
+                email : result.user?.email,
+                name : result.user?.displayName,
+                photo : result.user?.photoURL
+            }
+            fetch('http://localhost:5000/users',{
+                method:'POST',
+                headers:{
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify(userInfo)
+            })
+            .then(res => res.json())
+            .then(data =>{
+                console.log(data)
+            })
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
+
+    //private
+    if (user) {
+        return navigate('/')
+    }
+    if (user) {
+        return
     }
 
     return (
@@ -52,8 +87,11 @@ const Login = () => {
                         <p className='font-semibold '>New here ? <Link to='/register' className='text-amber-600'>Create an account</Link></p>
                         <p>Or sign in with</p>
                         <div className='flex items-center justify-center space-x-5 *:text-3xl'>
-                            <CiFacebook className='cursor-pointer' />
-                            <FaGoogle className='cursor-pointer' />
+                            <CiFacebook
+                             className='cursor-pointer' />
+                            <FaGoogle
+                            onClick={handleGoogle} 
+                            className='cursor-pointer' />
                             <FaGithub className='cursor-pointer' />
                         </div>
                     </div>

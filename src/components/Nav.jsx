@@ -2,19 +2,21 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { IoCartOutline } from "react-icons/io5";
+import useCart from "../Hooks/useCart";
 
 const Nav = () => {
    const { user, logOut } = useContext(AuthContext)
+   const [cart] = useCart()
 
    const navOptions = <>
       <NavLink to='/'>Home</NavLink>
       <NavLink to='/menu'>Our Menu</NavLink>
       <NavLink to='/order'>Order Food</NavLink>
-      <NavLink to='/login'>Login</NavLink>
-      <button className="flex items-center space-x-1 relative">
+      {!user && <NavLink to='/login'>Login</NavLink>}
+      {user && <Link to='/dashboard/cart' className="flex items-center space-x-1 relative">
          <IoCartOutline className="text-2xl"/>
-         <span className="absolute -right-5 -top-3 bg-pink-600 px-2 text-white font-semibold rounded-md">0</span>
-      </button>
+         <span className="absolute -right-5 -top-3 bg-pink-600 px-2 text-white font-semibold rounded-md">{cart.length}</span>
+      </Link>}
    </>
    return (
       <div className="navbar bg-base-100">
